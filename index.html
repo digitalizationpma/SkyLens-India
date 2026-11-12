@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkyLens India · Mumbai</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;background:#F4F6FA;color:#1C212D}
+main{max-width:860px;margin:0 auto;padding:40px 20px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:30px;color:#1F2A44}h1 b{color:#FE7A1B}
+.lang{display:flex;gap:6px}.lang button{border:1px solid #C9D0DD;background:#fff;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer;min-width:42px}
+.lang button[aria-pressed=true]{background:#FE7A1B;border-color:#FE7A1B}
+.sub{color:#56658A;margin:10px 0 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{display:block;background:#fff;border:1px solid #E3E7EF;border-radius:16px;padding:22px;text-decoration:none;color:inherit}
+.card:hover{border-color:#FE7A1B}.card h2{margin:8px 0 6px;font-size:20px}.card p{margin:0;color:#56658A;line-height:1.5}
+.tag{font-size:11px;font-weight:800;letter-spacing:.06em;color:#FE7A1B}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><h1>Sky<b>Lens</b> India</h1>
+<div class="lang" role="group" aria-label="Language"><button type="button" data-l="en">EN</button><button type="button" data-l="hi">हि</button><button type="button" data-l="mr">म</button><button type="button" data-l="id">ID</button></div></div>
+<p class="sub" data-t="sub"></p>
+<div class="grid">
+<a class="card" href="dash/index.html"><span class="tag">ADMIN</span><h2>Dashboard</h2><p data-t="dash"></p></a>
+<a class="card" href="app/index.html"><span class="tag" data-t="tagApp"></span><h2 data-t="app"></h2><p data-t="appd"></p></a>
+</div>
+</main>
+<script>
+/* pilihan bahasa halaman awal; disimpan di slin_lang yang sama dengan app & dashboard */
+(function(){
+  var T = {
+    en: {sub:'NDD Mumbai · W01 West · fork of SkyLens 2.0', dash:'Sign in with your own account: BM per branch, RBM per region, Super Admin.',
+      tagApp:'SALES', app:'Sales app', appd:'Pick your distributor, then your name. Sign in with your 6-digit PIN. Open it on a phone for the real feel.'},
+    hi: {sub:'NDD Mumbai · W01 पश्चिम · SkyLens 2.0 का फ़ोर्क', dash:'अपने खाते से साइन इन करें: शाखा के लिए BM, रीजन के लिए RBM, सुपर एडमिन।',
+      tagApp:'सेल्स', app:'सेल्स ऐप', appd:'अपना वितरक चुनें, फिर अपना नाम। 6-अंकीय PIN से साइन इन करें। असली अनुभव के लिए फ़ोन पर खोलें।'},
+    mr: {sub:'NDD Mumbai · W01 पश्चिम · SkyLens 2.0 चा फोर्क', dash:'स्वतःच्या खात्याने साइन इन करा: शाखेसाठी BM, प्रदेशासाठी RBM, सुपर ॲडमिन.',
+      tagApp:'सेल्स', app:'सेल्स ॲप', appd:'तुमचा वितरक निवडा, मग तुमचे नाव. 6-अंकी PIN ने साइन इन करा. खरा अनुभव मिळण्यासाठी फोनवर उघडा.'},
+    id: {sub:'NDD Mumbai · W01 West · fork SkyLens 2.0', dash:'Masuk dengan akun pribadi: BM per cabang, RBM per region, Super Admin.',
+      tagApp:'SALES', app:'App sales', appd:'Pilih NDD, lalu pilih nama. Masuk dengan PIN 6 angka. Buka di HP supaya paling mirip aslinya.'}
+  };
+  function pakai(l){
+    if(!T[l]) l = 'en';
+    try{ localStorage.setItem('slin_lang', l); }catch(e){}
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent = T[l][el.getAttribute('data-t')]; });
+    document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-l') === l ? 'true' : 'false'); });
+  }
+  var l = 'en'; try{ l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('slin_lang') || 'en'; }catch(e){}
+  document.querySelectorAll('.lang button').forEach(function(b){ b.onclick = function(){ pakai(b.getAttribute('data-l')); }; });
+  pakai(l);
+})();
+</script>
+</body>
+</html>
